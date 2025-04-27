@@ -15,7 +15,9 @@ export const config = {
 };
 
 export const client = new Client();
-client.setEndpoint(config.endpoint!).setProject(config.projectId!).setPlatform(config.platform!);
+client.setEndpoint(config.endpoint!)
+	.setProject(config.projectId!)
+	.setPlatform(config.platform!);
 
 
 export const avatar = new Avatars(client);
@@ -26,15 +28,20 @@ export async function login() {
 		const redirectUri = Linking.createURL("/");
 
 		const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUri);
-		if (!response) throw new Error("Create OAuth2 token failed");
+		if (!response) throw new Error("Create OAuth2 token failed 1");
 
-		const browserResult = await openAuthSessionAsync(response.toString(), redirectUri);
-		if (browserResult.type !== "success") throw new Error("Create OAuth2 token failed");
+		const browserResult = await openAuthSessionAsync(
+			response.toString(), 
+			redirectUri
+		);
+
+		if (browserResult.type !== "success") 
+			throw new Error("Create OAuth2 token failed 2");
 
 		const url = new URL(browserResult.url);
 		const secret = url.searchParams.get("secret")?.toString();
 		const userId = url.searchParams.get("userId")?.toString();
-		if (!secret || !userId) throw new Error("Create OAuth2 token failed");
+		if (!secret || !userId) throw new Error("Create OAuth2 token failed 3");
 
 		const session = await account.createSession(userId, secret);
 		if (!session) throw new Error("Failed to create session");
