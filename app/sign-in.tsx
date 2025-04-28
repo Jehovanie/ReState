@@ -13,12 +13,9 @@ const SignIn = () => {
 	if (!loading && isLogged) return <Redirect href="/" />;
 
 	const handleLogin = async () => {
-		// Handle Google login logic here
-
 		const result = await login();
 		if (result) {
-			// Navigate to the next screen or perform any action after successful login
-			console.log("Login successful!");
+			refetch();
 		} else {
 			Alert.alert("Login failed", "Please try again later.");
 		}
