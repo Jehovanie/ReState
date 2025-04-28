@@ -9,13 +9,9 @@ export default function Index() {
 				justifyContent: "center",
 				alignItems: "center",
 			}}>
-			<Text>Hello World...</Text>
-			<Text className="font-bold text-3xl font-rubik-extrabold text-center my-10">Jehovanie, comming again...</Text>
-
-			<Link href="/sign-in">Sign In</Link>
-			<Link href="/explore">Explore</Link>
-			<Link href="/profile">Profile</Link>
-			<Link href="/properties/777">Properties</Link>
+			<Text className="font-bold text-3xl font-rubik-extrabold text-center my-10">
+				Welcome to the ReState
+			</Text>
 		</View>
 	);
 }
