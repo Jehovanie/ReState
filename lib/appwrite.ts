@@ -15,10 +15,7 @@ export const config = {
 };
 
 export const client = new Client();
-client.setEndpoint(config.endpoint!)
-	.setProject(config.projectId!)
-	.setPlatform(config.platform!);
-
+client.setEndpoint(config.endpoint!).setProject(config.projectId!).setPlatform(config.platform!);
 
 export const avatar = new Avatars(client);
 export const account = new Account(client);
@@ -31,13 +28,9 @@ export async function login() {
 		const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUri);
 		if (!response) throw new Error("Create OAuth2 token failed 1");
 
-		const browserResult = await openAuthSessionAsync(
-			response.toString(), 
-			redirectUri
-		);
+		const browserResult = await openAuthSessionAsync(response.toString(), redirectUri);
 
-		if (browserResult.type !== "success") 
-			throw new Error("Create OAuth2 token failed 2");
+		if (browserResult.type !== "success") throw new Error("Create OAuth2 token failed 2");
 
 		const url = new URL(browserResult.url);
 		const secret = url.searchParams.get("secret")?.toString();
@@ -53,7 +46,6 @@ export async function login() {
 		return false;
 	}
 }
-
 
 export async function logout() {
 	try {
@@ -117,5 +109,15 @@ export async function getProperties({ filter, query, limit }: { filter: string; 
 	} catch (error) {
 		console.error(error);
 		return [];
+	}
+}
+
+export async function getPropertyById({ id }: { id: string }) {
+	try {
+		const result = await databases.getDocument(config.databaseId!, config.propertiesCollectionId!, id);
+		return result;
+	} catch (error) {
+		console.error(error);
+		return null;
 	}
 }
